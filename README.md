@@ -1,160 +1,91 @@
-# HoldLight Climb App
+# HoldLight: Climbing Assistance Demo System
 
-HoldLight is a full-stack climbing assistance web application for CPT208. It helps users scan a climbing wall, review detected holds, choose a route, and receive live guidance during a climb.
+HoldLight is a full-stack web application developed for CPT208. It explores how browser-based computer vision, voice interaction, and guided training workflows can support climbing practice.
 
-## Source Code Repository
+## Main Capabilities
 
-GitHub repository: <https://github.com/Yuuu-05/CPT208-ClimbApp>
+- User registration and authentication with JSON Web Tokens.
+- Video upload and browser-based pose analysis.
+- MediaPipe-powered pose detection and feedback features.
+- Voice-command and audio-feedback interfaces using browser APIs.
+- Training, profile, practice-record, and community-oriented pages.
+- REST API and MongoDB-backed data layer.
+- Docker, Nginx, Render, and GitHub Actions configuration for deployment workflows.
 
-## Technologies Used
+## Technology Stack
 
-- Frontend: React 18, TypeScript, Vite, React Router
-- Styling: CSS, Tailwind CSS tooling, PostCSS, Autoprefixer
-- Camera and guidance: Browser MediaDevices API, Web Speech API, Web Audio API, MediaPipe Pose
-- Backend: Node.js, Express.js
-- Database: MongoDB with Mongoose
-- Authentication: JSON Web Tokens, bcrypt
-- Computer vision service: Python, OpenCV, Pillow, NumPy, PyTorch, TorchVision, Detectron2
-- Deployment: Docker, Nginx, Render Blueprint, GitHub Actions, Git LFS
+| Area | Technologies |
+| --- | --- |
+| Front end | React 18, TypeScript, Vite, React Router, Axios, Tailwind/PostCSS tooling |
+| Browser features | MediaDevices, Web Speech API, Web Audio API, MediaPipe Pose |
+| Back end | Node.js, Express, Mongoose, JWT, bcrypt |
+| Data | MongoDB |
+| Computer vision | Python utilities and machine-learning dependencies included with the project |
+| Deployment | Docker, Nginx, Render Blueprint, GitHub Actions |
 
-## Project Structure
+## Repository Structure
 
 ```text
-CPT208-ClimbApp/
-|-- climb-app-frontend/   # Vite + React frontend
-|-- climb-app-backend/    # Express API and Python vision runtime
-|-- deploy/               # Deployment examples and scripts
-|-- render.yaml           # Render full-stack deployment blueprint
-`-- package.json          # Root helper scripts
+.
+|-- climb-app-frontend/          # React + TypeScript client application
+|-- climb-app-backend/           # Express API and MongoDB integration
+|-- docker-compose.yml           # Local multi-service configuration
+|-- render.yaml                  # Render deployment blueprint
+|-- .github/workflows/           # Continuous-integration workflows
+`-- package.json                 # Convenience scripts for both applications
 ```
 
-## Setup Instructions
+## Prerequisites
 
-### 1. Prerequisites
+- Node.js 18 or later (recommended)
+- npm
+- MongoDB instance for the back end
+- Git LFS, if model or large binary assets need to be retrieved
 
-Install these tools before running the project:
-
-- Git
-- Git LFS
-- Node.js 20+
-- Python 3.10+
-- MongoDB connection string, for example MongoDB Atlas or a local MongoDB server
-
-### 2. Clone the Repository
+Install Git LFS and download LFS-tracked assets when required:
 
 ```bash
 git lfs install
-git clone https://github.com/Yuuu-05/CPT208-ClimbApp.git
-cd CPT208-ClimbApp
 git lfs pull
 ```
 
-`git lfs pull` is required because the vision pipeline uses large model files.
+## Local Setup
 
-### 3. Configure Environment Variables
-
-Create the backend environment file:
+Clone this repository and install both JavaScript applications:
 
 ```bash
-cp climb-app-backend/.env.example climb-app-backend/.env
-```
-
-Set at least these backend values in `climb-app-backend/.env`:
-
-```env
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=replace_with_a_long_random_secret
-PORT=5000
-VISION_PROVIDER=xiaoxiae
-```
-
-Create the frontend environment file:
-
-```bash
-cp climb-app-frontend/.env.example climb-app-frontend/.env
-```
-
-For local development, set:
-
-```env
-VITE_API_BASE_URL=http://localhost:5000/api
-VITE_ENABLE_DEV_AUTH_BYPASS=false
-```
-
-### 4. Install JavaScript Dependencies
-
-From the repository root:
-
-```bash
+git clone https://github.com/YoumingYang16/my-project2.git
+cd my-project2
 npm run install:all
 ```
 
-### 5. Install Python Vision Dependencies
+Create the required environment files from the provided examples, then set the relevant MongoDB and authentication values. Do not commit private environment files or credentials.
 
-From the repository root:
-
-```bash
-cd climb-app-backend
-python -m venv .venv
-```
-
-Windows PowerShell:
-
-```powershell
-.\.venv\Scripts\python.exe -m pip install --upgrade pip
-.\.venv\Scripts\python.exe -m pip install -r requirements-xiaoxiae.txt
-```
-
-macOS/Linux:
-
-```bash
-.venv/bin/python -m pip install --upgrade pip
-.venv/bin/python -m pip install -r requirements-xiaoxiae.txt
-```
-
-Then set `VISION_PYTHON_COMMAND` in `climb-app-backend/.env`:
-
-```env
-# Windows
-VISION_PYTHON_COMMAND=.venv\Scripts\python.exe
-
-# macOS/Linux
-VISION_PYTHON_COMMAND=.venv/bin/python
-```
-
-### 6. Run the Application
-
-Open two terminals from the repository root.
-
-Terminal 1:
+Start the back end in one terminal:
 
 ```bash
 npm run dev:backend
 ```
 
-Terminal 2:
+Start the front end in another terminal:
 
 ```bash
 npm run dev:frontend
 ```
 
-Default local URLs:
-
-- Frontend: <http://localhost:5173>
-- Backend API: <http://localhost:5000>
-- Backend health check: <http://localhost:5000/api/health>
-
-## Build
-
-Build the frontend production bundle:
+To create a production front-end build:
 
 ```bash
 npm run build:frontend
 ```
 
-## Notes
+## Configuration Notes
 
-- The backend requires a valid `MONGO_URI`; it will not start without a database connection.
-- The full wall-scanning feature requires the Git LFS model files and Python vision dependencies.
-- Browser camera access requires HTTPS in production. Localhost works for development.
-- Deployment details are available in `DEPLOYMENT.md`.
+- The back-end service must be able to reach the configured MongoDB instance.
+- Browser camera, microphone, speech, and audio features may require HTTPS or `localhost` permissions.
+- Large model files are managed with Git LFS according to `.gitattributes`.
+- Deployment-related files are included for reference and may need environment-specific values before production use.
+
+## Academic Use
+
+This repository is a coursework demonstration system. It is not a medical, safety-critical, or professional climbing-coaching product.
